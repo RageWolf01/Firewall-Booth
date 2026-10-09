@@ -1,0 +1,185 @@
+[gd_scene format=3 uid="uid://b5w5d5f4g3h2v"]
+
+[ext_resource type="Script" uid="uid://d3peu5t5trcpc" path="res://addons/godot_ai_hook/test/test.gd" id="1_abcde"]
+[ext_resource type="PackedScene" uid="uid://bthjx8ttujhtb" path="res://addons/godot_ai_hook/ai_manage/ai_manage.tscn" id="2_fghij"]
+
+[node name="Test" type="PanelContainer" unique_id=620087770]
+anchors_preset = -1
+anchor_right = 0.753
+anchor_bottom = 1.077
+offset_right = 0.23999023
+offset_bottom = -0.16003418
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_abcde")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=852066998]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer" unique_id=1789970949]
+layout_mode = 2
+text = "Model Test"
+horizontal_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer" unique_id=206513202]
+layout_mode = 2
+columns = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/GridContainer" unique_id=53617165]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "model"
+
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer/GridContainer" unique_id=957072705]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "deepseek-chat"
+alignment = 1
+
+[node name="Label2" type="Label" parent="VBoxContainer/GridContainer" unique_id=1495054648]
+layout_mode = 2
+text = "url"
+
+[node name="LineEdit2" type="LineEdit" parent="VBoxContainer/GridContainer" unique_id=2109116031]
+layout_mode = 2
+placeholder_text = "https://api.deepseek.com/v1/chat/completionseek.com"
+alignment = 1
+
+[node name="Label3" type="Label" parent="VBoxContainer/GridContainer" unique_id=1586244869]
+layout_mode = 2
+text = "secret_key"
+
+[node name="LineEdit3" type="LineEdit" parent="VBoxContainer/GridContainer" unique_id=776562833]
+layout_mode = 2
+placeholder_text = "API_KEY"
+alignment = 1
+secret = true
+
+[node name="TipLabel" type="Label" parent="VBoxContainer/GridContainer" unique_id=253922117]
+layout_mode = 2
+text = "Configure ai_config before running tests"
+
+[node name="Button" type="Button" parent="VBoxContainer/GridContainer" unique_id=194438250]
+layout_mode = 2
+text = "Connection Test"
+
+[node name="Label4" type="Label" parent="VBoxContainer/GridContainer" unique_id=1535131053]
+layout_mode = 2
+text = "Connection Status ->"
+
+[node name="Label5" type="Label" parent="VBoxContainer/GridContainer" unique_id=820656363]
+layout_mode = 2
+
+[node name="Button2" type="Button" parent="VBoxContainer/GridContainer" unique_id=175358634]
+layout_mode = 2
+text = "Run All Tests"
+
+[node name="Label7" type="Label" parent="VBoxContainer/GridContainer" unique_id=314779771]
+layout_mode = 2
+
+[node name="Label6" type="Label" parent="VBoxContainer/GridContainer" unique_id=1679933820]
+layout_mode = 2
+text = "Typing interval"
+
+[node name="SpinBox" type="SpinBox" parent="VBoxContainer/GridContainer" unique_id=30303000]
+layout_mode = 2
+step = 0.01
+
+[node name="Label8" type="Label" parent="VBoxContainer/GridContainer" unique_id=645602805]
+layout_mode = 2
+text = "Sentence pause interval"
+
+[node name="SpinBox2" type="SpinBox" parent="VBoxContainer/GridContainer" unique_id=1173571350]
+layout_mode = 2
+step = 0.01
+
+[node name="Label9" type="Label" parent="VBoxContainer/GridContainer" unique_id=544807723]
+layout_mode = 2
+text = "Clear parent text before reply"
+
+[node name="CheckBox" type="CheckBox" parent="VBoxContainer/GridContainer" unique_id=625594361]
+layout_mode = 2
+button_pressed = true
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer" unique_id=46188106]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="GridContainer2" type="GridContainer" parent="VBoxContainer/ScrollContainer" unique_id=1663068412]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 2
+
+[node name="Label6" type="Label" parent="VBoxContainer/ScrollContainer/GridContainer2" unique_id=1208159670]
+layout_mode = 2
+size_flags_vertical = 6
+text = "Non-streaming output"
+
+[node name="LineEdit4" type="LineEdit" parent="VBoxContainer/ScrollContainer/GridContainer2" unique_id=1425498209]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="AiManage" parent="VBoxContainer/ScrollContainer/GridContainer2/LineEdit4" unique_id=806058615 instance=ExtResource("2_fghij")]
+
+[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/GridContainer2" unique_id=668362978]
+layout_mode = 2
+size_flags_vertical = 6
+text = "line_edit（can't edit version)"
+
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer/ScrollContainer/GridContainer2" unique_id=1361813979]
+layout_mode = 2
+size_flags_horizontal = 3
+editable = false
+
+[node name="AiManage" parent="VBoxContainer/ScrollContainer/GridContainer2/LineEdit" unique_id=171684265 instance=ExtResource("2_fghij")]
+
+[node name="Label2" type="Label" parent="VBoxContainer/ScrollContainer/GridContainer2" unique_id=192421771]
+layout_mode = 2
+size_flags_vertical = 6
+text = "rich_text_label"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/ScrollContainer/GridContainer2" unique_id=876678383]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+vertical_alignment = 1
+
+[node name="AiManage" parent="VBoxContainer/ScrollContainer/GridContainer2/RichTextLabel" unique_id=601982958 instance=ExtResource("2_fghij")]
+
+[node name="Label3" type="Label" parent="VBoxContainer/ScrollContainer/GridContainer2" unique_id=1148783782]
+layout_mode = 2
+size_flags_vertical = 6
+text = "code_edit"
+
+[node name="CodeEdit" type="CodeEdit" parent="VBoxContainer/ScrollContainer/GridContainer2" unique_id=438732629]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+
+[node name="AiManage" parent="VBoxContainer/ScrollContainer/GridContainer2/CodeEdit" unique_id=1791303661 instance=ExtResource("2_fghij")]
+
+[node name="Label4" type="Label" parent="VBoxContainer/ScrollContainer/GridContainer2" unique_id=391545684]
+layout_mode = 2
+size_flags_vertical = 6
+text = "text_edit"
+
+[node name="TextEdit" type="TextEdit" parent="VBoxContainer/ScrollContainer/GridContainer2" unique_id=1941539293]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+
+[node name="AiManage" parent="VBoxContainer/ScrollContainer/GridContainer2/TextEdit" unique_id=389055540 instance=ExtResource("2_fghij")]
+
+[node name="Label7" type="Label" parent="VBoxContainer/ScrollContainer/GridContainer2" unique_id=2098366456]
+layout_mode = 2
+size_flags_vertical = 6
+text = "Interruption test"
+
+[node name="LineEdit5" type="LineEdit" parent="VBoxContainer/ScrollContainer/GridContainer2" unique_id=1017490854]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "If no text appears, interruption_time may be too small"
+
+[node name="AiManage" parent="VBoxContainer/ScrollContainer/GridContainer2/LineEdit5" unique_id=442632319 instance=ExtResource("2_fghij")]
+
+[node name="TextEdit" type="TextEdit" parent="VBoxContainer" unique_id=99356395]
+layout_mode = 2
+size_flags_vertical = 3

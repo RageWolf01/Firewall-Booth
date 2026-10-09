@@ -1,0 +1,250 @@
+[gd_scene format=3 uid="uid://b8ds104acoc72"]
+
+[ext_resource type="Script" uid="uid://c5i0d3kbleu46" path="res://scripts/main.gd" id="1_main"]
+[ext_resource type="Script" uid="uid://dss61lrfrha7g" path="res://scripts/inspection_window.gd" id="2_window"]
+[ext_resource type="Script" uid="uid://wjm12x625nne" path="res://scripts/status_light.gd" id="3_light"]
+
+[sub_resource type="StyleBoxFlat" id="Style_allow"]
+content_margin_left = 18.0
+content_margin_top = 10.0
+content_margin_right = 18.0
+content_margin_bottom = 10.0
+bg_color = Color(0.043, 0.129, 0.075, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.25, 0.73, 0.44, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0.298, 0.839, 0.514, 0.3)
+shadow_size = 12
+
+[sub_resource type="StyleBoxFlat" id="Style_allow_hover"]
+content_margin_left = 18.0
+content_margin_top = 10.0
+content_margin_right = 18.0
+content_margin_bottom = 10.0
+bg_color = Color(0.075, 0.216, 0.125, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.416, 0.898, 0.604, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0.298, 0.839, 0.514, 0.45)
+shadow_size = 16
+
+[sub_resource type="StyleBoxFlat" id="Style_allow_disabled"]
+content_margin_left = 18.0
+content_margin_top = 10.0
+content_margin_right = 18.0
+content_margin_bottom = 10.0
+bg_color = Color(0.086, 0.098, 0.09, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.22, 0.29, 0.24, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="Style_block"]
+content_margin_left = 18.0
+content_margin_top = 10.0
+content_margin_right = 18.0
+content_margin_bottom = 10.0
+bg_color = Color(0.153, 0.055, 0.043, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.855, 0.322, 0.267, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0.937, 0.353, 0.29, 0.3)
+shadow_size = 12
+
+[sub_resource type="StyleBoxFlat" id="Style_block_hover"]
+content_margin_left = 18.0
+content_margin_top = 10.0
+content_margin_right = 18.0
+content_margin_bottom = 10.0
+bg_color = Color(0.251, 0.094, 0.075, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 0.447, 0.369, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0.937, 0.353, 0.29, 0.45)
+shadow_size = 16
+
+[sub_resource type="StyleBoxFlat" id="Style_block_disabled"]
+content_margin_left = 18.0
+content_margin_top = 10.0
+content_margin_right = 18.0
+content_margin_bottom = 10.0
+bg_color = Color(0.098, 0.082, 0.078, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.29, 0.22, 0.2, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="Style_dark"]
+content_margin_left = 20.0
+content_margin_top = 12.0
+content_margin_right = 20.0
+content_margin_bottom = 12.0
+bg_color = Color(0.055, 0.047, 0.039, 0.88)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.36, 0.29, 0.19, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[node name="MainUI" type="Control" unique_id=1395518263]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_main")
+
+[node name="Window" type="Control" parent="." unique_id=434425614]
+anchors_preset = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+script = ExtResource("2_window")
+
+[node name="BoothSign" type="Label" parent="." unique_id=39646757]
+layout_mode = 0
+offset_left = 120.0
+offset_top = 176.0
+offset_right = 1800.0
+offset_bottom = 210.0
+theme_override_colors/font_color = Color(1, 0.855, 0.545, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.8)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 28
+text = "EDGE FIREWALL  -  INSPECTION BOOTH 03"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Manual" type="Label" parent="." unique_id=1898666221]
+layout_mode = 0
+offset_left = 96.0
+offset_top = 706.0
+offset_right = 352.0
+offset_bottom = 738.0
+theme_override_colors/font_color = Color(0.878, 0.706, 0.373, 1)
+theme_override_font_sizes/font_size = 19
+text = "MANUAL — SHIFT 1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ManualBody" type="Label" parent="." unique_id=539599246]
+layout_mode = 0
+offset_left = 84.0
+offset_top = 766.0
+offset_right = 364.0
+offset_bottom = 1024.0
+theme_override_colors/font_color = Color(0.227, 0.196, 0.149, 1)
+theme_override_font_sizes/font_size = 16
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Controls" type="VBoxContainer" parent="." unique_id=395881960]
+layout_mode = 0
+offset_left = 1440.0
+offset_top = 726.0
+offset_right = 1880.0
+offset_bottom = 1030.0
+theme_override_constants/separation = 18
+alignment = 2
+
+[node name="Actions" type="HBoxContainer" parent="Controls" unique_id=958808547]
+layout_mode = 2
+theme_override_constants/separation = 24
+alignment = 1
+
+[node name="Allow" type="Button" parent="Controls/Actions" unique_id=1528822590]
+custom_minimum_size = Vector2(196, 86)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.416, 0.898, 0.604, 1)
+theme_override_colors/font_hover_color = Color(0.639, 1, 0.749, 1)
+theme_override_colors/font_disabled_color = Color(0.263, 0.353, 0.286, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("Style_allow")
+theme_override_styles/pressed = SubResource("Style_allow")
+theme_override_styles/hover = SubResource("Style_allow_hover")
+theme_override_styles/disabled = SubResource("Style_allow_disabled")
+theme_override_styles/focus = SubResource("Style_allow")
+text = "ALLOW"
+
+[node name="Block" type="Button" parent="Controls/Actions" unique_id=1696456330]
+custom_minimum_size = Vector2(196, 86)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.447, 0.369, 1)
+theme_override_colors/font_hover_color = Color(1, 0.639, 0.573, 1)
+theme_override_colors/font_disabled_color = Color(0.353, 0.263, 0.247, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("Style_block")
+theme_override_styles/pressed = SubResource("Style_block")
+theme_override_styles/hover = SubResource("Style_block_hover")
+theme_override_styles/disabled = SubResource("Style_block_disabled")
+theme_override_styles/focus = SubResource("Style_block")
+text = "BLOCK"
+
+[node name="VerdictPanel" type="PanelContainer" parent="Controls" unique_id=1509219884]
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("Style_dark")
+
+[node name="Row" type="HBoxContainer" parent="Controls/VerdictPanel" unique_id=1457748216]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="Lamp" type="Control" parent="Controls/VerdictPanel/Row" unique_id=1948673780]
+custom_minimum_size = Vector2(52, 52)
+layout_mode = 2
+size_flags_vertical = 0
+script = ExtResource("3_light")
+color = Color(0.3, 0.28, 0.25, 1)
+
+[node name="Verdict" type="Label" parent="Controls/VerdictPanel/Row" unique_id=155788929]
+custom_minimum_size = Vector2(356, 0)
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.78, 0.74, 0.66, 1)
+theme_override_font_sizes/font_size = 18
+autowrap_mode = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=917100005]
+
+[connection signal="pressed" from="Controls/Actions/Allow" to="." method="_on_allow_pressed"]
+[connection signal="pressed" from="Controls/Actions/Block" to="." method="_on_block_pressed"]
