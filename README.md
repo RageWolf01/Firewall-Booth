@@ -31,8 +31,69 @@ godot --path .
 ```
 
 `F5` (or "Run Project") launches `res://scenes/main.tscn`. There is nothing to
-install and no assets to import — the whole booth is drawn with primitives, and the
-only image file in the project is the window icon.
+install. The first time the project opens, Godot imports the booth art in
+`assets/ui` and the two fonts in `assets/fonts`.
+
+## The look: the painted booth
+
+The screen **is** the reference painting, `source_files/booth_ui_source.png`
+(1672x941). It is not redrawn or approximated: `tools/build_ui_assets.py` scales
+it once to 1920x1080 and cuts it into the pieces the game needs, and the game
+lays them back together exactly where they came from. With a fresh packet at the
+glass the opening frame matches the painting almost pixel for pixel.
+
+What is cut out, and what puts it back:
+
+| In the painting | Cut into | Put back by |
+| --- | --- | --- |
+| The whole room | `booth_plate.png`, with every live element removed | `InspectionWindow`, drawn 1:1 |
+| The box at the glass | `packet_box.png` | `InspectionWindow`: the line, shuffling and walking off |
+| The pale boxes behind it | (drawn) | `InspectionWindow._draw_ghost()`, sizes measured off the painting |
+| The PACKET IDENTIFICATION sheet | `id_document.png`, value cells wiped | `InspectionWindow`: the packet's values, the stamp, picking it up |
+| The manual's words | wiped from the plate | `ManualPage`, typed from `MANUAL_TITLE` / `MANUAL_BODY` |
+| `PKT #0317-A` on the red tab | wiped from the plate | `InspectionWindow._draw_tag()`, numbered per sheet |
+| ALLOW / BLOCK caps | `btn_*_{normal,hover,pressed,disabled}.png`, masked to the cap | two `TextureButton`s over the painted caps |
+| The info panel's text | wiped from the plate | the `Verdict` label, auto-sized to the slot |
+| The "i" badge | left in the plate | `StatusLight` lights over it green / red on a verdict |
+| Camera tally lights, rack LEDs | left in the plate | `ambient_lights.gd` blinks and pulses them |
+
+The text is wiped by inpainting only the ink strokes, so the paper grain, rules
+and seals around it survive. The window behind the line is rebuilt row by row
+between the two lit uprights either side of it, which keeps the floor and rail
+bands straight.
+
+The lettering is matched with two OFL fonts in `assets/fonts` (licences
+alongside): **IBM Plex Mono SemiBold** for all the paperwork — it is the face
+the painting's typewritten text is in, close enough that the values on the
+sheet land on the painted ones — and **Rubik SemiBold** for the info panel.
+
+Things worth knowing before changing it:
+
+- **Every coordinate is a viewport pixel measured off the scaled painting.** If
+  the painting changes, re-run the tool, then check `DOC_RECT`, `BOX_RECT`,
+  `DEPTH_TOP` / `DEPTH_W` and `VALUE_BASELINES` in `inspection_window.gd`; the
+  tool prints the ones it derives. The button rects live in both the tool and
+  `main.tscn`.
+- **Clipping is done by drawing the plate back over things.** A packet walking
+  past the glass, and a sheet down the feed slot, are hidden by redrawing that
+  part of `booth_plate.png` on top (`_cover_with_plate()`). It clips rotated
+  sprites and text as well as rects, which hand-clipping did not.
+- **The variable font's weight is set by numeric OpenType tag.** Keying
+  `variation_opentype` with the string `"wght"` is silently ignored and the
+  face renders in its thin default.
+- **The locked buttons are only dimmed, not dark.** The painting shows the caps
+  lit while the sheet is still unread, so the locked state is kept close to it.
+  The strength is one line in `write_button()` in the tool.
+- **The Verdict label is sized against a fixed slot (`PANEL_TEXT`).** A Label
+  grows to fit its text, so testing the fit against its own size always passes
+  and long lessons spilled off the panel.
+
+To rebuild the art:
+
+```
+python -m pip install pillow numpy opencv-python-headless
+python tools/build_ui_assets.py
+```
 
 ## How a shift plays right now
 
@@ -126,6 +187,11 @@ bottom edge reads as a sheet being picked up off the desk.
 
 ## Art direction: the industrial hybrid
 
+> **Superseded by the painted booth above.** This section and "The room, and what
+> makes it feel like a room" describe the procedural, primitives-only pass that
+> came before it. The palette block and the draw functions they mention no longer
+> exist; the ideas behind them are what the painting was made from.
+
 The look is a **deliberate clash**: a cold, teal-lit vista seen through a heavy
 brass window, against a warm timber bench lit by a single amber lamp. The room
 is institutional and the objects on it are worn and physical. That contrast is
@@ -191,9 +257,6 @@ station, a cooling unit, overhead busbar.
   states dim to grey-green / grey-red so the lock is legible without losing the
   colour identity.
 
-Everything is still drawn with primitives â€” no imported art, no textures. If you
-recolour, do it in the palette block rather than at the call sites, or the
-materials stop agreeing with each other.
 
 
 `InspectionWindow` disables its own `_process` when idle, and everything it
@@ -302,22 +365,21 @@ the queue outside is scenery: nobody walks up or leaves.
 
 ```
 scenes/main.tscn             Control root "MainUI"
-                               â”œâ”€ Control "Window"       the whole booth, 1920x1080
-                               â”œâ”€ Label "BoothSign"      etched label above the window
-                               â”œâ”€ Label "Manual"         clipboard heading
-                               â”œâ”€ Label "ManualBody"     the day's rules
-                               â””â”€ VBoxContainer "Controls"   bottom right, on the desk
-                                    â”œâ”€ HBoxContainer "Actions"
-                                    â”‚    â”œâ”€ Button "Allow"
-                                    â”‚    â””â”€ Button "Block"
-                                    â””â”€ PanelContainer "VerdictPanel"
-                                         â””â”€ Row: Control "Lamp" + Label "Verdict"
+                               |- Control "Window"     InspectionWindow: plate, line, ID sheet, tag
+                               |- Control "Ambient"    blinking camera lights and rack LEDs
+                               |- Control "Manual"     ManualPage: the day's rules on the notebook
+                               |- TextureButton "Allow" / "Block"   over the painted caps
+                               |- Control "Lamp"       StatusLight, over the info panel's "i"
+                               '- Label "Verdict"      the info panel's text
 
 scripts/main.gd              the booth: queue, judging, lamp and text
-scripts/inspection_window.gd class_name InspectionWindow â€” the whole room, drawn in code
-scripts/packet.gd            class_name Packet â€” one customer and its correct answer
-scripts/status_light.gd      class_name StatusLight â€” the lamp, drawn not typed
-scripts/ui_font.gd           autoload "UiFont" â€” one shared Font for draw_string()
+scripts/inspection_window.gd class_name InspectionWindow - the plate and everything live on it
+scripts/manual_page.gd       class_name ManualPage - the manual, typed onto the notebook
+scripts/ambient_lights.gd    blinking / pulsing lights in the painting
+scripts/packet.gd            class_name Packet - one customer and its correct answer
+scripts/status_light.gd      class_name StatusLight - the verdict lamp, drawn not typed
+scripts/ui_font.gd           autoload "UiFont" - the two shared fonts
+tools/build_ui_assets.py     cuts source_files/booth_ui_source.png into assets/ui
 ```
 
 ### Layout rules worth keeping
@@ -367,8 +429,8 @@ reason should be derived from that day's rules instead and these fields go away.
 
 ### The room, and what makes it feel like a room
 
-**There are no imported art assets in this project.** `inspection_window.gd`
-draws the entire view with primitives â€” rectangles, polygons, circles, lines and
+*(Historical — see "The look: the painted booth".)* `inspection_window.gd`
+used to draw the entire view with primitives â€” rectangles, polygons, circles, lines and
 `draw_string()`. That is a deliberate choice, not a limitation: the scene can be
 re-tuned by editing numbers, and it cannot break on a missing texture.
 
