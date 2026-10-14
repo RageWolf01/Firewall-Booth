@@ -16,3 +16,8 @@ addons/.godot_ai_update/
 *.translation
 .DS_Store
 Thumbs.db
+
+# Stray copy of the booth reference image at the project root. The kept copy is
+# source_files/booth_ui_source.png.
+/97bae35e-48b2-4e6a-a9cd-58854c2f000d.png
+/97bae35e-48b2-4e6a-a9cd-58854c2f000d.png.import
